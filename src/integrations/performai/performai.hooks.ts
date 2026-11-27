@@ -6,7 +6,6 @@ import {
   getMaimaiData,
   getMaimaiProfile,
 } from './performai.functions'
-
 import type {
   ChunithmData,
   ChunithmProfileExtended,

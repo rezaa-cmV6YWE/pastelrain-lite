@@ -1,4 +1,5 @@
 import { Image } from '@unpic/react'
+import type { ReactNode } from 'react'
 import { LuCircuitBoard } from 'react-icons/lu'
 import {
   SiBetterauth,
@@ -25,17 +26,7 @@ import {
 import { TbBrandCSharp } from 'react-icons/tb'
 import { VscVscode } from 'react-icons/vsc'
 
-import type { ReactNode } from 'react'
-
-function IconLink({
-  href,
-  label,
-  children,
-}: {
-  href: string
-  label: string
-  children: ReactNode
-}) {
+function IconLink({ href, label, children }: { href: string; label: string; children: ReactNode }) {
   return (
     <a
       href={href}
@@ -52,7 +43,7 @@ function IconLink({
   )
 }
 
-export default function WhoAmI() {
+export function WhoAmI() {
   return (
     <div className="space-y-4">
       <div className="flex items-center gap-4">
@@ -132,10 +123,7 @@ export default function WhoAmI() {
         <h3 className="font-pixel text-xl">Want to Learn:</h3>
         <ul className="flex flex-wrap gap-2">
           <li>
-            <IconLink
-              href="https://learn.microsoft.com/en-us/dotnet/csharp/"
-              label="C#"
-            >
+            <IconLink href="https://learn.microsoft.com/en-us/dotnet/csharp/" label="C#">
               <TbBrandCSharp size={32} />
             </IconLink>
           </li>
@@ -191,18 +179,12 @@ export default function WhoAmI() {
             </IconLink>
           </li>
           <li>
-            <IconLink
-              href="https://discord.com/users/465403883469012992"
-              label="Discord"
-            >
+            <IconLink href="https://discord.com/users/465403883469012992" label="Discord">
               <SiDiscord size={32} />
             </IconLink>
           </li>
           <li>
-            <IconLink
-              href="https://steamcommunity.com/id/rrainc/"
-              label="Steam"
-            >
+            <IconLink href="https://steamcommunity.com/id/rrainc/" label="Steam">
               <SiSteam size={32} />
             </IconLink>
           </li>

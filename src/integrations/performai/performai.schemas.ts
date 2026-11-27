@@ -24,10 +24,7 @@ export const MaimaiProfileSchema = z.object({
   title: z.object({
     value: z.string().nullable().optional(),
     typeUrl: z.url().nullable().optional(),
-    type: z
-      .enum(['rainbow', 'gold', 'silver', 'bronze', 'normal'])
-      .nullable()
-      .optional(),
+    type: z.enum(['rainbow', 'gold', 'silver', 'bronze', 'normal']).nullable().optional(),
   }),
   stars: z.number().int().nonnegative().nullable().optional(),
   playCount: z.object({
@@ -147,13 +144,7 @@ export const ChunithmProfileExtendedSchema = ChunithmProfileSchema.extend({
   nameplate: z.url().nullable().optional(),
 })
 
-export const ChunithmDifficultySchema = z.enum([
-  'basic',
-  'advanced',
-  'expert',
-  'master',
-  'ultima',
-])
+export const ChunithmDifficultySchema = z.enum(['basic', 'advanced', 'expert', 'master', 'ultima'])
 
 export const ChunithmRatingSongSchema = z.object({
   id: z.string(),

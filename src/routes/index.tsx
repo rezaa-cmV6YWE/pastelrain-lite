@@ -1,12 +1,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import ChunithmProfile from '@/components/ChunithmProfile'
-import Footer from '@/components/Footer'
-import MaimaiProfile from '@/components/MaimaiProfile'
-import NowPlayingSpotify from '@/components/NowPlayingSpotify'
-import Projects from '@/components/Projects'
-import Title from '@/components/Title'
-import WhoAmI from '@/components/WhoAmI'
+import { ChunithmProfile } from '#/components/chunithm-profile'
+import { Footer } from '#/components/footer'
+import { MaimaiProfile } from '#/components/maimai-profile'
+import { NowPlayingSpotify } from '#/components/now-playing-spotify'
+import { Projects } from '#/components/projects'
+import { Title } from '#/components/title'
+import { WhoAmI } from '#/components/who-am-i'
 
 export const Route = createFileRoute('/')({ component: Home })
 

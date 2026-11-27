@@ -1,7 +1,6 @@
 import { useMotionValue, useSpring, useTransform } from 'motion/react'
-import { useEffect } from 'react'
-
 import type { MotionValue } from 'motion/react'
+import { useEffect } from 'react'
 
 export function useParallax(depth: number): {
   x: MotionValue<number>

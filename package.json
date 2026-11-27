@@ -1,5 +1,6 @@
 {
   "name": "pastelrain",
+  "version": "0.0.0",
   "private": true,
   "type": "module",
   "imports": {
@@ -10,11 +11,12 @@
     "generate-routes": "tsr generate",
     "build": "vite build",
     "preview": "vite preview",
+    "deploy": "pnpm run build && wrangler deploy",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
+    "prepare": "husky",
     "format": "oxfmt",
-    "check": "oxfmt --check",
-    "deploy": "pnpm run build && wrangler deploy"
+    "format:check": "oxfmt --check"
   },
   "dependencies": {
     "@fontsource-variable/fraunces": "^5.3.0",
@@ -22,13 +24,13 @@
     "@fontsource/dela-gothic-one": "^5.3.0",
     "@fontsource/geist-pixel": "^5.3.0",
     "@tailwindcss/vite": "^4.1.18",
-    "@tanstack/react-devtools": "^0.10.15",
-    "@tanstack/react-query": "^5.108.4",
-    "@tanstack/react-query-devtools": "^5.108.4",
-    "@tanstack/react-router": "^1.170.46",
-    "@tanstack/react-router-devtools": "^1.167.4",
-    "@tanstack/react-router-ssr-query": "^1.167.3",
-    "@tanstack/react-start": "^1.169.7",
+    "@tanstack/react-devtools": "0.10.15",
+    "@tanstack/react-query": "5.108.4",
+    "@tanstack/react-query-devtools": "5.108.4",
+    "@tanstack/react-router": "1.170.46",
+    "@tanstack/react-router-devtools": "1.167.4",
+    "@tanstack/react-router-ssr-query": "1.167.3",
+    "@tanstack/react-start": "1.169.7",
     "@unpic/react": "^1.0.2",
     "cn": "^0.3.0",
     "motion": "^12.43.0",
@@ -41,18 +43,37 @@
   "devDependencies": {
     "@cloudflare/vite-plugin": "^1.26.0",
     "@cloudflare/workers-types": "^5.20260801.1",
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
+    "@semantic-release/changelog": "^7.0.0",
+    "@semantic-release/commit-analyzer": "^14.0.0-beta.4",
+    "@semantic-release/git": "^11.0.1",
+    "@semantic-release/github": "^12.0.11",
+    "@semantic-release/npm": "^14.0.0-beta.2",
+    "@semantic-release/release-notes-generator": "^15.0.0-beta.3",
     "@tailwindcss/typography": "^0.5.16",
-    "@tanstack/devtools-vite": "^0.8.7",
+    "@tanstack/devtools-vite": "0.8.7",
     "@tanstack/router-cli": "^1.168.0",
     "@types/node": "^22.10.2",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
-    "oxfmt": "^0.73.0",
-    "oxlint": "^1.88.0",
+    "conventional-changelog-conventionalcommits": "^10.4.1",
+    "husky": "^9.1.7",
+    "oxfmt": "^0.75.0",
+    "oxlint": "^1.90.0",
+    "semantic-release": "^26.0.1",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
     "wrangler": "^4.70.0"
   },
-  "packageManager": "pnpm@11.21.0"
+  "engines": {
+    "node": ">=26.13.1"
+  },
+  "packageManager": "pnpm@12.23.0",
+  "intent": {
+    "skills": [
+      "*"
+    ]
+  }
 }

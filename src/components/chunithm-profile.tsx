@@ -1,9 +1,9 @@
 import { Image } from '@unpic/react'
 import { cn } from 'cn'
 
-import { useChunithmProfileQuery } from '@/integrations/performai'
+import { useChunithmProfileQuery } from '#/integrations/performai'
 
-export default function ChunithmProfile() {
+export function ChunithmProfile() {
   const { data, isLoading, error } = useChunithmProfileQuery()
 
   // Convenient access for when implementing UI
@@ -11,32 +11,19 @@ export default function ChunithmProfile() {
 
   return (
     <section className="space-y-2">
-      <h2 className="font-pixel flex items-center gap-2 text-2xl">Chunithm</h2>
+      <h2 className="flex items-center gap-2 font-pixel text-2xl">Chunithm</h2>
 
-      {isLoading && (
-        <p className="text-sm text-gray-400">Loading Chunithm stats...</p>
-      )}
+      {isLoading && <p className="text-sm text-gray-400">Loading Chunithm stats...</p>}
 
-      {error && (
-        <p className="text-sm text-red-400">
-          Error loading Chunithm: {error.message}
-        </p>
-      )}
+      {error && <p className="text-sm text-red-400">Error loading Chunithm: {error.message}</p>}
 
       {data?.maintenance && (
-        <p className="text-sm text-yellow-500">
-          ⚠️ Maintenance active: {data.reason}
-        </p>
+        <p className="text-sm text-yellow-500">⚠️ Maintenance active: {data.reason}</p>
       )}
 
       {profile && (
         <div className="relative">
-          <Image
-            src={profile.nameplate ?? ''}
-            width={396}
-            height={63}
-            className="w-full"
-          />
+          <Image src={profile.nameplate ?? ''} width={396} height={63} className="w-full" />
           <div className="absolute top-0 right-3 w-[72%] sm:right-6">
             <div className="relative">
               {profile.team && profile.team.emblemUrl ? (
@@ -69,9 +56,7 @@ export default function ChunithmProfile() {
                 <div className="border-b border-black/50 px-1">
                   <span className="sm:text-2xl">Lv.</span>
                   <span className="sm:text-4xl">{profile.level}</span>
-                  <span className="ml-4 text-xl sm:text-4xl">
-                    {profile.name}
-                  </span>
+                  <span className="ml-4 text-xl sm:text-4xl">{profile.name}</span>
                 </div>
                 <div className="mt-1 flex px-1 sm:mt-2">
                   <span className="text-xs sm:text-lg">Rating</span>

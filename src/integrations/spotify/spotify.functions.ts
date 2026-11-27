@@ -44,21 +44,16 @@ export const getSpotifyNowPlaying = createServerFn({ method: 'GET' }).handler(
     if (!tokenRes.ok) {
       const body = await tokenRes.text()
       console.error('[spotify] token refresh failed:', tokenRes.status, body)
-      throw new Error(
-        `Failed to refresh Spotify access token: ${tokenRes.status} ${body}`,
-      )
+      throw new Error(`Failed to refresh Spotify access token: ${tokenRes.status} ${body}`)
     }
 
     const tokenData: { access_token: string } = await tokenRes.json()
 
-    const playerRes = await fetch(
-      'https://api.spotify.com/v1/me/player/currently-playing',
-      {
-        headers: {
-          Authorization: `Bearer ${tokenData.access_token}`,
-        },
+    const playerRes = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+      headers: {
+        Authorization: `Bearer ${tokenData.access_token}`,
       },
-    )
+    })
 
     if (playerRes.status === 204) {
       return { isPlaying: false, track: null }
@@ -67,9 +62,7 @@ export const getSpotifyNowPlaying = createServerFn({ method: 'GET' }).handler(
     if (!playerRes.ok) {
       const body = await playerRes.text()
       console.error('[spotify] player fetch failed:', playerRes.status, body)
-      throw new Error(
-        `Failed to fetch Spotify now playing: ${playerRes.status} ${body}`,
-      )
+      throw new Error(`Failed to fetch Spotify now playing: ${playerRes.status} ${body}`)
     }
 
     const playerData: {

@@ -56,15 +56,7 @@ export function RainDot({
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <circle
-        cx="12"
-        cy="12"
-        r="9"
-        fill={color}
-        stroke={outline}
-        strokeWidth="2"
-        {...rest}
-      />
+      <circle cx="12" cy="12" r="9" fill={color} stroke={outline} strokeWidth="2" {...rest} />
     </svg>
   )
 }

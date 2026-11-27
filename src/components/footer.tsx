@@ -1,4 +1,4 @@
-export default function Footer() {
+export function Footer() {
   return (
     <footer className="flex flex-col">
       <span className="font-pixel text-2xl">pastelrain.com</span>
@@ -9,7 +9,7 @@ export default function Footer() {
           href="https://www.pixiv.net/en/artworks/138023835"
           target="_blank"
           rel="noopener noreferrer"
-          className="hover:text-drop-coral underline transition"
+          className="underline transition hover:text-drop-coral"
         >
           えってる
         </a>

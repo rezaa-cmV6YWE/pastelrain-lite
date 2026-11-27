@@ -1,8 +1,8 @@
 import { Image } from '@unpic/react'
 
-import { useMaimaiProfileQuery } from '@/integrations/performai'
+import { useMaimaiProfileQuery } from '#/integrations/performai'
 
-export default function MaimaiProfile() {
+export function MaimaiProfile() {
   const { data, isLoading, error } = useMaimaiProfileQuery()
 
   // Convenient access for when implementing UI
@@ -10,39 +10,21 @@ export default function MaimaiProfile() {
 
   return (
     <section className="space-y-2">
-      <h2 className="font-pixel flex items-center gap-2 text-2xl">Maimai</h2>
+      <h2 className="flex items-center gap-2 font-pixel text-2xl">Maimai</h2>
 
-      {isLoading && (
-        <p className="text-sm text-gray-400">Loading Maimai stats...</p>
-      )}
+      {isLoading && <p className="text-sm text-gray-400">Loading Maimai stats...</p>}
 
-      {error && (
-        <p className="text-sm text-red-400">
-          Error loading Maimai: {error.message}
-        </p>
-      )}
+      {error && <p className="text-sm text-red-400">Error loading Maimai: {error.message}</p>}
 
       {data?.maintenance && (
-        <p className="text-sm text-yellow-500">
-          Maintenance active: {data.reason}
-        </p>
+        <p className="text-sm text-yellow-500">Maintenance active: {data.reason}</p>
       )}
 
       {profile && (
         <div className="relative">
-          <Image
-            src={profile.frame ?? ''}
-            width={396}
-            height={165}
-            className="w-full"
-          />
+          <Image src={profile.frame ?? ''} width={396} height={165} className="w-full" />
           <div className="absolute top-2 left-2 w-2/3 sm:top-4 sm:left-4">
-            <Image
-              src={profile.nameplate ?? ''}
-              width={396}
-              height={63}
-              className="w-full"
-            />
+            <Image src={profile.nameplate ?? ''} width={396} height={63} className="w-full" />
             <Image
               src={profile.icon ?? ''}
               width={64}
@@ -62,9 +44,7 @@ export default function MaimaiProfile() {
               />
             </div>
             <div className="absolute top-[35%] left-[15%] flex max-w-[35%] items-center justify-between rounded border bg-white sm:top-[42%]">
-              <span className="text-[8px] text-black sm:text-xs">
-                {profile.name}
-              </span>
+              <span className="text-[8px] text-black sm:text-xs">{profile.name}</span>
               <div className="w-1/4">
                 <Image src={profile.courseRank ?? ''} width={396} height={63} />
               </div>

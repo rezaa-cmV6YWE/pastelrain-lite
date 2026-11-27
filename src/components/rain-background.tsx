@@ -1,8 +1,8 @@
 import { motion } from 'motion/react'
 import { useMemo } from 'react'
 
-import { RainDot, RainDrop, RainPuddle } from '@/components/RainDrop'
-import { useParallax } from '@/hooks/useParallax'
+import { RainDot, RainDrop, RainPuddle } from '#/components/rain-drop'
+import { useParallax } from '#/hooks/use-parallax'
 
 const DROP_COLORS = [
   'var(--drop-sky)',
@@ -109,13 +109,7 @@ function RainElement({ element }: { element: RainElementData }) {
   )
 }
 
-function ParallaxLayer({
-  children,
-  depth,
-}: {
-  children: React.ReactNode
-  depth: number
-}) {
+function ParallaxLayer({ children, depth }: { children: React.ReactNode; depth: number }) {
   const { x, y } = useParallax(depth)
 
   return (

@@ -2,11 +2,10 @@ import { useQuery } from '@tanstack/react-query'
 import { Image } from '@unpic/react'
 import { SiSpotify } from 'react-icons/si'
 
-import { getSpotifyNowPlaying } from '@/integrations/spotify/spotify.functions'
+import { getSpotifyNowPlaying } from '#/integrations/spotify/spotify.functions'
+import type { SpotifyNowPlaying } from '#/integrations/spotify/spotify.functions'
 
-import type { SpotifyNowPlaying } from '@/integrations/spotify/spotify.functions'
-
-export default function NowPlayingSpotify() {
+export function NowPlayingSpotify() {
   const { data, isLoading, error } = useQuery<SpotifyNowPlaying>({
     queryKey: ['spotify-now-playing'],
     queryFn: () => getSpotifyNowPlaying(),
@@ -15,7 +14,7 @@ export default function NowPlayingSpotify() {
 
   return (
     <section className="space-y-2">
-      <h2 className="font-pixel flex items-center gap-2 text-2xl">
+      <h2 className="flex items-center gap-2 font-pixel text-2xl">
         <SiSpotify />
         Listening to
       </h2>
@@ -31,9 +30,7 @@ export default function NowPlayingSpotify() {
       )}
 
       {error && (
-        <p className="text-sm text-red-400">
-          Could not load Spotify data: {error.message}
-        </p>
+        <p className="text-sm text-red-400">Could not load Spotify data: {error.message}</p>
       )}
 
       {!isLoading && !error && !data?.track && (
@@ -41,9 +38,7 @@ export default function NowPlayingSpotify() {
           <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-800/50">
             <SiSpotify className="text-gray-400" />
           </div>
-          <p className="text-sm text-gray-400">
-            Not playing anything right now.
-          </p>
+          <p className="text-sm text-gray-400">Not playing anything right now.</p>
         </div>
       )}
 
@@ -69,16 +64,14 @@ export default function NowPlayingSpotify() {
           )}
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <p className="group-hover:text-drop-teal truncate text-sm font-semibold transition">
+              <p className="truncate text-sm font-semibold transition group-hover:text-drop-teal">
                 {data.track.name}
               </p>
               {data.isPlaying && (
                 <span className="inline-block h-2 w-2 shrink-0 animate-pulse rounded-full bg-green-400" />
               )}
             </div>
-            <p className="truncate text-xs text-gray-300">
-              {data.track.artist}
-            </p>
+            <p className="truncate text-xs text-gray-300">{data.track.artist}</p>
           </div>
         </a>
       )}
