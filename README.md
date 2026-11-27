@@ -32,6 +32,7 @@ pnpm check      # oxfmt --check
 
 - `.oxlintrc.json` — oxlint config (browser/node env, correctness/suspicious/perf categories; `style` is off because oxfmt owns formatting).
 - `.oxfmtrc.jsonc` — oxfmt config (semi/singleQuote/trailing-comma, `sortImports`, `sortTailwindcss` with `cn`, ignore patterns).
+- `.zed/settings.json` — Zed uses oxfmt as the format-on-save formatter (Prettier disabled). Requires the [Oxc extension](https://github.com/oxc-project/oxc-zed).
 
 ## Project Structure
 
