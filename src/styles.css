@@ -131,3 +131,24 @@ button {
   outline: 2px solid var(--glass-ink);
   outline-offset: 3px;
 }
+
+@keyframes rain-fall {
+  from {
+    transform: translate3d(0, -15vh, 0);
+  }
+  to {
+    transform: translate3d(0, 115vh, 0);
+  }
+}
+
+.rain-fall {
+  transform: translate3d(0, -15vh, 0);
+  animation: rain-fall linear infinite backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rain-fall {
+    animation: none;
+    transform: translate3d(0, var(--rain-rest-y), 0);
+  }
+}
