@@ -26,7 +26,6 @@ export function useParallax(depth: number): {
 
     const onTouch = (e: TouchEvent) => {
       const touch = e.touches[0]
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
       if (!touch) return
       mx.set(touch.clientX / window.innerWidth - 0.5)
       my.set(touch.clientY / window.innerHeight - 0.5)

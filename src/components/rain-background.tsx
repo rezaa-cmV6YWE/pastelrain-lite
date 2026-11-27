@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import { motion, useReducedMotion } from 'motion/react'
 import { useMemo } from 'react'
 
 import { RainDot, RainDrop, RainPuddle } from '#/components/rain-drop'
@@ -74,6 +74,9 @@ function makeElements(): Array<RainElementData> {
 
 function RainElement({ element }: { element: RainElementData }) {
   const outline = 'var(--rain-ink)'
+  const reduceMotion = useReducedMotion()
+  // With reduced motion the drops hang still, spread down the screen by their start delay.
+  const restingY = `${(element.delay / 8) * 100}vh`
 
   return (
     <motion.div
@@ -82,8 +85,8 @@ function RainElement({ element }: { element: RainElementData }) {
         left: `${element.left}%`,
         opacity: element.opacity,
       }}
-      initial={{ y: '-15vh' }}
-      animate={{ y: '115vh' }}
+      initial={{ y: reduceMotion ? restingY : '-15vh' }}
+      animate={reduceMotion ? undefined : { y: '115vh' }}
       transition={{
         duration: element.duration,
         delay: element.delay,

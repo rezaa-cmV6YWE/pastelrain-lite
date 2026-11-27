@@ -264,7 +264,7 @@ export const getMaimaiProfile = createServerFn({ method: 'GET' }).handler(
       return {
         maintenance: true,
         data: null,
-        reason: `Maimai maintenance window (${windowStr})`,
+        reason: `maimai maintenance window (${windowStr})`,
       }
     }
 
@@ -310,7 +310,7 @@ export const getChunithmProfile = createServerFn({ method: 'GET' }).handler(
       return {
         maintenance: true,
         data: null,
-        reason: 'Chunithm maintenance window (02:00 - 06:00 JST)',
+        reason: 'CHUNITHM maintenance window (02:00 - 06:00 JST)',
       }
     }
 
@@ -360,7 +360,7 @@ export const getMaimaiData = createServerFn({ method: 'GET' }).handler(
       return {
         maintenance: true,
         data: null,
-        reason: `Maimai maintenance window (${windowStr})`,
+        reason: `maimai maintenance window (${windowStr})`,
       }
     }
 
@@ -410,7 +410,7 @@ export const getChunithmData = createServerFn({ method: 'GET' }).handler(
       return {
         maintenance: true,
         data: null,
-        reason: 'Chunithm maintenance window (02:00 - 06:00 JST)',
+        reason: 'CHUNITHM maintenance window (02:00 - 06:00 JST)',
       }
     }
 

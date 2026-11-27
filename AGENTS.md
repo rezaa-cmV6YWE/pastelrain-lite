@@ -96,8 +96,9 @@ pastelrain-lite/
 ├── .github/workflows/ci.yml  # Typecheck, lint, format, commitlint, release
 ├── .husky/commit-msg         # commitlint hook
 ├── src/
-│   ├── components/           # chunithm-profile, footer, maimai-profile, now-playing-spotify,
-│   │                         # projects, rain-background, rain-drop, title, who-am-i
+│   ├── components/           # chunithm-profile, footer, game-profile-status, maimai-profile,
+│   │                         # now-playing-spotify, projects, rain-background, rain-drop, title,
+│   │                         # who-am-i
 │   ├── hooks/use-parallax.ts # Mouse-driven parallax
 │   ├── integrations/
 │   │   ├── performai/        # maimai/CHUNITHM server functions, schemas, hooks

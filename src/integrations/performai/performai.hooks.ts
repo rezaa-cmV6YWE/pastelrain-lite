@@ -22,6 +22,9 @@ export function useMaimaiProfileQuery() {
     queryKey: ['performai', 'maimai', 'profile'],
     queryFn: () => getMaimaiProfile(),
     staleTime: 1000 * 60 * 60, // 1 hour (matches ISG edge cache)
+    // The upstream call is slow when it fails (e.g. an expired SEGA session); one retry
+    // instead of three keeps the loading placeholder from hanging for over a minute.
+    retry: 1,
   })
 }
 
@@ -33,6 +36,7 @@ export function useChunithmProfileQuery() {
     queryKey: ['performai', 'chunithm', 'profile'],
     queryFn: () => getChunithmProfile(),
     staleTime: 1000 * 60 * 60, // 1 hour (matches ISG edge cache)
+    retry: 1,
   })
 }
 

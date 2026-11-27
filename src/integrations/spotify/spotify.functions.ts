@@ -17,12 +17,6 @@ export const getSpotifyNowPlaying = createServerFn({ method: 'GET' }).handler(
     const clientSecret = env.SPOTIFY_CLIENT_SECRET
     const refreshToken = env.SPOTIFY_REFRESH_TOKEN
 
-    console.log('[spotify] env present:', {
-      clientId: !!clientId,
-      clientSecret: !!clientSecret,
-      refreshToken: !!refreshToken,
-    })
-
     if (!clientId || !clientSecret || !refreshToken) {
       throw new Error(
         'Spotify credentials are not configured. Set SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET, and SPOTIFY_REFRESH_TOKEN in Cloudflare secrets.',
@@ -67,13 +61,18 @@ export const getSpotifyNowPlaying = createServerFn({ method: 'GET' }).handler(
 
     const playerData: {
       is_playing: boolean
+      // null while an ad or a podcast episode is playing
       item: {
         name: string
         artists: Array<{ name: string }>
         album: { images: Array<{ url: string }> }
         external_urls: { spotify: string }
-      }
+      } | null
     } = await playerRes.json()
+
+    if (!playerData.item) {
+      return { isPlaying: false, track: null }
+    }
 
     return {
       isPlaying: playerData.is_playing,

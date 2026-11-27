@@ -9,22 +9,25 @@ export function Title() {
 
   return (
     <motion.div
+      lang="ja"
       className="relative flex h-[80svh] w-full items-center justify-center"
       style={{ x: titleX, y: titleY }}
     >
-      <motion.h1
+      <motion.span
+        aria-hidden
         className="absolute scale-110 font-display text-5xl text-drop-teal md:text-7xl"
         style={{ x: tealX, y: tealY }}
       >
         パステルレイン
-      </motion.h1>
-      <motion.h1
+      </motion.span>
+      <motion.span
+        aria-hidden
         className="absolute scale-105 font-display text-5xl text-drop-coral md:text-7xl"
         style={{ x: coralX, y: coralY }}
       >
         パステルレイン
-      </motion.h1>
-      <motion.h1 className="absolute font-display text-5xl md:text-7xl">パステルレイン</motion.h1>
+      </motion.span>
+      <h1 className="absolute font-display text-5xl md:text-7xl">パステルレイン</h1>
     </motion.div>
   )
 }
