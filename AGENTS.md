@@ -31,6 +31,10 @@ npx @tanstack/cli@latest create my-tanstack-app \
 > Note: `--tailwind` is deprecated in current TanStack CLI; Tailwind is enabled by default for TanStack Start scaffolds.
 >
 > The project directory was later renamed from `my-tanstack-app` to `pastelrain` and the `package.json`, `.cta.json`, and `wrangler.jsonc` names were updated to match.
+>
+> The toolchain was later migrated from ESLint + Prettier to [Oxc](https://oxc.rs/) (`oxlint` + `oxfmt`); `eslint.config.js`, `prettier.config.js`, and `.prettierignore` were removed, and the `@tanstack/eslint-config`, `eslint`, `prettier`, `@ianvs/prettier-plugin-sort-imports`, `prettier-plugin-tailwindcss` devDeps were dropped (oxfmt covers class sorting and import ordering natively).
+>
+> Tooling, config files, and file naming were later aligned with the sibling project `../pastelrain`; keep the two consistent when changing either.
 
 ## TanStack Intent
 
@@ -64,40 +68,54 @@ Key installed skill sources:
 | Router             | TanStack Router (file-based)                                |
 | Data fetching      | TanStack Query + `@tanstack/react-router-ssr-query`         |
 | Styling            | Tailwind CSS v4 (`@tailwindcss/vite`)                       |
-| Toolchain          | ESLint via `@tanstack/eslint-config`                        |
-| Formatting         | Prettier                                                    |
+| Linting            | Oxlint (`oxlint`)                                           |
+| Formatting         | Oxfmt (`oxfmt`) — built-in `sortImports`, `sortTailwindcss` |
 | Build tool         | Vite 8                                                      |
 | Deployment/Hosting | Cloudflare Workers via `@cloudflare/vite-plugin` + Wrangler |
 
 Partner integrations represented:
 
 - **Cloudflare**: `@cloudflare/vite-plugin` in `vite.config.ts`, `wrangler.jsonc`, `pnpm deploy` script, Workers-compatible entry (`@tanstack/react-start/server-entry`).
-- **TanStack Query**: provider/context in `src/integrations/tanstack-query/`, SSR integration in `src/router.tsx`, demo route at `src/routes/demo/tanstack-query.tsx`.
-- **ESLint**: `eslint.config.js` extending `@tanstack/eslint-config`, `pnpm lint` script.
+- **TanStack Query**: provider/context in `src/integrations/tanstack-query/`, SSR integration in `src/router.tsx`, used by `src/components/now-playing-spotify.tsx` and the `performai` hooks.
+- **Oxc**: `.oxlintrc.json` (plugins eslint/typescript/unicorn/oxc/react/import/jsx-a11y; `correctness` error, `suspicious` warn; `react/react-in-jsx-scope` off); `.oxfmtrc.json` (no semicolons, single quotes, `sortImports`, `sortTailwindcss` with `cn` and `src/styles.css` as the stylesheet); `pnpm lint`, `pnpm format`, `pnpm format:check` scripts. Both ignore `src/routeTree.gen.ts` and `worker-configuration.d.ts`.
+
+## Tooling & Conventions
+
+- **Package manager:** pnpm only. `packageManager` pins `pnpm@12.23.0` exactly (Workers Builds runs it through Corepack, which rejects ranges); `engines.node` and `.node-version` pin Node 26.13.1, keep them in step. `pnpm-workspace.yaml` sets `allowBuilds` and lets the TanStack packages link their skills into `.agents/skills` and `.claude/skills` (`intent.skills` in `package.json`).
+- **Pinned versions:** the TanStack runtime and devtools packages are pinned exactly (no `^`); upgrade them together to the latest stable release.
+- **Commits:** Conventional Commits, enforced by commitlint (`commitlint.config.js`) through the husky `commit-msg` hook (`pnpm install` runs `prepare: husky`).
+- **CI/Release:** `.github/workflows/ci.yml` runs `tsc --noEmit`, `oxlint`, `format:check` and commitlint on pushes to `main`/`dev` and on PRs; pushes to `main` then run semantic-release (`release.config.js`), which needs a `RELEASE_TOKEN` repository secret (an admin PAT).
+- **File names:** kebab-case for every source file (`now-playing-spotify.tsx`, `use-parallax.ts`); components and hooks use named exports (`export function NowPlayingSpotify`), no default exports.
+- **Imports:** use the `#/*` → `./src/*` alias (works in TypeScript and at runtime through `package.json` `imports`); `@/*` is TypeScript-only and kept for compatibility.
+- **Checks before finishing a change:** `pnpm exec tsc --noEmit && pnpm exec oxlint && pnpm format:check && pnpm build`.
 
 ## Project Structure
 
 ```text
-pastelrain/
+pastelrain-lite/
+├── .github/workflows/ci.yml  # Typecheck, lint, format, commitlint, release
+├── .husky/commit-msg         # commitlint hook
 ├── src/
-│   ├── components/          # Header, Footer, ThemeToggle
+│   ├── components/           # chunithm-profile, footer, game-profile-status, maimai-profile,
+│   │                         # now-playing-spotify, projects, rain-background, rain-drop, title,
+│   │                         # who-am-i
+│   ├── hooks/use-parallax.ts # Mouse-driven parallax
 │   ├── integrations/
-│   │   └── tanstack-query/  # Provider, devtools, router context
-│   ├── routes/              # File-based routes
-│   │   ├── __root.tsx       # Root layout/document shell
-│   │   ├── index.tsx        # Home
-│   │   ├── about.tsx        # About
-│   │   └── demo/
-│   │       └── tanstack-query.tsx
-│   ├── router.tsx           # Router factory + QueryClient context
-│   ├── styles.css           # Tailwind import + design tokens
-│   ├── app.tsx / client.tsx # Start entry points
-│   └── routeTree.gen.ts     # Generated route tree
-├── vite.config.ts           # Vite + Cloudflare + Tailwind + Start plugins
-├── wrangler.jsonc           # Cloudflare Workers config
-├── eslint.config.js         # ESLint config
-├── tsr.config.json          # TanStack Router generator config
-└── package.json             # pnpm scripts & deps
+│   │   ├── performai/        # maimai/CHUNITHM server functions, schemas, hooks
+│   │   ├── spotify/          # Now-playing server function
+│   │   └── tanstack-query/   # QueryClient context, devtools
+│   ├── routes/               # __root.tsx, index.tsx, $.tsx
+│   ├── router.tsx            # Router factory + QueryClient context
+│   ├── styles.css            # Tailwind import + design tokens
+│   └── routeTree.gen.ts      # Generated route tree
+├── vite.config.ts            # Vite + Cloudflare + Tailwind + Start plugins
+├── wrangler.jsonc            # Cloudflare Workers config
+├── .oxlintrc.json            # Oxlint config
+├── .oxfmtrc.json             # Oxfmt config
+├── commitlint.config.js      # Conventional Commits rules
+├── release.config.js         # semantic-release config
+├── tsr.config.json           # TanStack Router generator config
+└── package.json              # pnpm scripts & deps
 ```
 
 ## Environment Variables
@@ -141,7 +159,7 @@ See the Cloudflare docs for binding configuration (KV, D1, R2, Durable Objects) 
 
 ## Next Steps
 
-- Customize `src/routes/index.tsx`, `src/components/Header.tsx`, and `src/components/Footer.tsx`.
+- Customize `src/routes/index.tsx` and the components under `src/components/`.
 - Add routes under `src/routes/` (route tree regenerates automatically or via `pnpm generate-routes`).
 - Add Cloudflare bindings in `wrangler.jsonc` when needed.
 - For TanStack Query patterns, load the relevant Intent skill before making substantial changes.

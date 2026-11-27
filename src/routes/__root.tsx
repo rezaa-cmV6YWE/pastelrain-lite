@@ -1,4 +1,5 @@
 import { TanStackDevtools } from '@tanstack/react-devtools'
+import type { QueryClient } from '@tanstack/react-query'
 import {
   ClientOnly,
   createRootRouteWithContext,
@@ -7,10 +8,9 @@ import {
 } from '@tanstack/react-router'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 
-import { RainBackground } from '@/components/RainBackground'
-import appCss from '@/styles.css?url'
+import { RainBackground } from '#/components/rain-background'
 
-import type { QueryClient } from '@tanstack/react-query'
+import appCss from '#/styles.css?url'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -31,7 +31,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       },
       {
         name: 'description',
-        content: "hi, i'm re: --- a software developer.",
+        content: "hi, i'm re: — a software developer.",
       },
     ],
     links: [

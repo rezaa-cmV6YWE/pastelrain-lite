@@ -1,32 +1,33 @@
 import { motion } from 'motion/react'
 
-import { useParallax } from '@/hooks/useParallax'
+import { useParallax } from '#/hooks/use-parallax'
 
-export default function Title() {
+export function Title() {
   const { x: titleX, y: titleY } = useParallax(-0.3)
   const { x: tealX, y: tealY } = useParallax(0.08)
   const { x: coralX, y: coralY } = useParallax(0.04)
 
   return (
     <motion.div
+      lang="ja"
       className="relative flex h-[80svh] w-full items-center justify-center"
       style={{ x: titleX, y: titleY }}
     >
-      <motion.h1
-        className="font-display text-drop-teal absolute scale-110 text-5xl md:text-7xl"
+      <motion.span
+        aria-hidden
+        className="absolute scale-110 font-display text-5xl text-drop-teal md:text-7xl"
         style={{ x: tealX, y: tealY }}
       >
         パステルレイン
-      </motion.h1>
-      <motion.h1
-        className="font-display text-drop-coral absolute scale-105 text-5xl md:text-7xl"
+      </motion.span>
+      <motion.span
+        aria-hidden
+        className="absolute scale-105 font-display text-5xl text-drop-coral md:text-7xl"
         style={{ x: coralX, y: coralY }}
       >
         パステルレイン
-      </motion.h1>
-      <motion.h1 className="font-display absolute text-5xl md:text-7xl">
-        パステルレイン
-      </motion.h1>
+      </motion.span>
+      <h1 className="absolute font-display text-5xl md:text-7xl">パステルレイン</h1>
     </motion.div>
   )
 }

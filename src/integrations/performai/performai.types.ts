@@ -1,3 +1,5 @@
+import type { z } from 'zod'
+
 import type {
   ChunithmCharacterSchema,
   ChunithmDifficultySchema,
@@ -14,7 +16,6 @@ import type {
   MaimaiRatingSchema,
   MaimaiRatingSongSchema,
 } from './performai.schemas'
-import type { z } from 'zod'
 
 export type MaimaiProfile = z.infer<typeof MaimaiProfileSchema>
 export type Circle = z.infer<typeof CircleSchema>
@@ -32,9 +33,7 @@ export type ChunithmCharacter = z.infer<typeof ChunithmCharacterSchema>
 export type ChunithmProfileRating = z.infer<typeof ChunithmProfileRatingSchema>
 export type ChunithmPlayCount = z.infer<typeof ChunithmPlayCountSchema>
 export type ChunithmProfile = z.infer<typeof ChunithmProfileSchema>
-export type ChunithmProfileExtended = z.infer<
-  typeof ChunithmProfileExtendedSchema
->
+export type ChunithmProfileExtended = z.infer<typeof ChunithmProfileExtendedSchema>
 export type ChunithmDifficulty = z.infer<typeof ChunithmDifficultySchema>
 export type ChunithmRatingSong = z.infer<typeof ChunithmRatingSongSchema>
 export type ChunithmRating = z.infer<typeof ChunithmRatingSchema>

@@ -11,7 +11,6 @@ import {
   MaimaiProfileResponseSchema,
   MaimaiRatingResponseSchema,
 } from './performai.schemas'
-
 import type {
   ChunithmData,
   ChunithmProfileExtended,
@@ -92,16 +91,13 @@ async function loginToPerformai(game: 'maimai' | 'chunithm'): Promise<string> {
     )
   }
 
-  const loginRes = await fetch(
-    `${PERFORMAI_API_BASE}/${PERFORMAI_SERVER}/${game}/login`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ segaId, password }),
+  const loginRes = await fetch(`${PERFORMAI_API_BASE}/${PERFORMAI_SERVER}/${game}/login`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  )
+    body: JSON.stringify({ segaId, password }),
+  })
 
   if (!loginRes.ok) {
     const errorJson: unknown = await loginRes.json().catch(() => null)
@@ -134,12 +130,9 @@ async function fetchProfileFromPerformai(
   const cookie = await loginToPerformai(game)
   const cookieHeaderName = `x-${game}-cookie`
 
-  const profileRes = await fetch(
-    `${PERFORMAI_API_BASE}/${PERFORMAI_SERVER}/${game}/profile`,
-    {
-      headers: { [cookieHeaderName]: cookie },
-    },
-  )
+  const profileRes = await fetch(`${PERFORMAI_API_BASE}/${PERFORMAI_SERVER}/${game}/profile`, {
+    headers: { [cookieHeaderName]: cookie },
+  })
 
   if (!profileRes.ok) {
     const errorJson: unknown = await profileRes.json().catch(() => null)
@@ -178,9 +171,7 @@ async function fetchProfileFromPerformai(
  * Internal helper to authenticate and safely fetch game profile and rating data from performai-api with Zod validation.
  * (Kept for full rating/top-50 song queries in the future)
  */
-async function fetchFromPerformai(
-  game: 'maimai' | 'chunithm',
-): Promise<MaimaiData | ChunithmData> {
+async function fetchFromPerformai(game: 'maimai' | 'chunithm'): Promise<MaimaiData | ChunithmData> {
   const cookie = await loginToPerformai(game)
   const cookieHeaderName = `x-${game}-cookie`
 
@@ -268,27 +259,19 @@ export const getMaimaiProfile = createServerFn({ method: 'GET' }).handler(
   async (): Promise<PerformaiResult<MaimaiProfileExtended>> => {
     if (isMaimaiMaintenanceHour()) {
       const { day } = getJstTime()
-      const windowStr =
-        day === 3
-          ? '01:00 - 04:00 JST (Wednesday extended)'
-          : '01:00 - 02:00 JST'
+      const windowStr = day === 3 ? '01:00 - 04:00 JST (Wednesday extended)' : '01:00 - 02:00 JST'
       setResponseHeader('Cache-Control', 'public, max-age=300')
       return {
         maintenance: true,
         data: null,
-        reason: `Maimai maintenance window (${windowStr})`,
+        reason: `maimai maintenance window (${windowStr})`,
       }
     }
 
     try {
-      const profile = (await fetchProfileFromPerformai(
-        'maimai',
-      )) as MaimaiProfileExtended
+      const profile = (await fetchProfileFromPerformai('maimai')) as MaimaiProfileExtended
 
-      setResponseHeader(
-        'Cache-Control',
-        'public, s-maxage=3600, stale-while-revalidate=86400',
-      )
+      setResponseHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
 
       return {
         maintenance: false,
@@ -327,19 +310,14 @@ export const getChunithmProfile = createServerFn({ method: 'GET' }).handler(
       return {
         maintenance: true,
         data: null,
-        reason: 'Chunithm maintenance window (02:00 - 06:00 JST)',
+        reason: 'CHUNITHM maintenance window (02:00 - 06:00 JST)',
       }
     }
 
     try {
-      const profile = (await fetchProfileFromPerformai(
-        'chunithm',
-      )) as ChunithmProfileExtended
+      const profile = (await fetchProfileFromPerformai('chunithm')) as ChunithmProfileExtended
 
-      setResponseHeader(
-        'Cache-Control',
-        'public, s-maxage=3600, stale-while-revalidate=86400',
-      )
+      setResponseHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
 
       return {
         maintenance: false,
@@ -377,15 +355,12 @@ export const getMaimaiData = createServerFn({ method: 'GET' }).handler(
     // Check Maimai maintenance window (01:00 - 02:00 JST, or 01:00 - 04:00 JST on Wednesdays)
     if (isMaimaiMaintenanceHour()) {
       const { day } = getJstTime()
-      const windowStr =
-        day === 3
-          ? '01:00 - 04:00 JST (Wednesday extended)'
-          : '01:00 - 02:00 JST'
+      const windowStr = day === 3 ? '01:00 - 04:00 JST (Wednesday extended)' : '01:00 - 02:00 JST'
       setResponseHeader('Cache-Control', 'public, max-age=300')
       return {
         maintenance: true,
         data: null,
-        reason: `Maimai maintenance window (${windowStr})`,
+        reason: `maimai maintenance window (${windowStr})`,
       }
     }
 
@@ -393,10 +368,7 @@ export const getMaimaiData = createServerFn({ method: 'GET' }).handler(
       const result = (await fetchFromPerformai('maimai')) as MaimaiData
 
       // ISG cache control: fresh at edge for 1 hour, serve stale up to 24h while revalidating
-      setResponseHeader(
-        'Cache-Control',
-        'public, s-maxage=3600, stale-while-revalidate=86400',
-      )
+      setResponseHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
 
       return {
         maintenance: false,
@@ -438,7 +410,7 @@ export const getChunithmData = createServerFn({ method: 'GET' }).handler(
       return {
         maintenance: true,
         data: null,
-        reason: 'Chunithm maintenance window (02:00 - 06:00 JST)',
+        reason: 'CHUNITHM maintenance window (02:00 - 06:00 JST)',
       }
     }
 
@@ -446,10 +418,7 @@ export const getChunithmData = createServerFn({ method: 'GET' }).handler(
       const result = (await fetchFromPerformai('chunithm')) as ChunithmData
 
       // ISG cache control: fresh at edge for 1 hour, serve stale up to 24h while revalidating
-      setResponseHeader(
-        'Cache-Control',
-        'public, s-maxage=3600, stale-while-revalidate=86400',
-      )
+      setResponseHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400')
 
       return {
         maintenance: false,
@@ -488,13 +457,9 @@ export const getPerformaiData = createServerFn({ method: 'GET' })
       game: z.enum(['maimai', 'chunithm']),
     }),
   )
-  .handler(
-    async ({
-      data: { game },
-    }): Promise<PerformaiResult<MaimaiData | ChunithmData>> => {
-      if (game === 'maimai') {
-        return getMaimaiData()
-      }
-      return getChunithmData()
-    },
-  )
+  .handler(async ({ data: { game } }): Promise<PerformaiResult<MaimaiData | ChunithmData>> => {
+    if (game === 'maimai') {
+      return getMaimaiData()
+    }
+    return getChunithmData()
+  })

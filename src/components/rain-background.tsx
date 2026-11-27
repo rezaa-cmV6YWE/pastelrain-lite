@@ -1,8 +1,9 @@
 import { motion } from 'motion/react'
 import { useMemo } from 'react'
+import type { CSSProperties } from 'react'
 
-import { RainDot, RainDrop, RainPuddle } from '@/components/RainDrop'
-import { useParallax } from '@/hooks/useParallax'
+import { RainDot, RainDrop, RainPuddle } from '#/components/rain-drop'
+import { useParallax } from '#/hooks/use-parallax'
 
 const DROP_COLORS = [
   'var(--drop-sky)',
@@ -74,23 +75,17 @@ function makeElements(): Array<RainElementData> {
 
 function RainElement({ element }: { element: RainElementData }) {
   const outline = 'var(--rain-ink)'
+  // With reduced motion the drops hang still, spread down the screen by their start delay.
+  const style: CSSProperties & { '--rain-rest-y': string } = {
+    left: `${element.left}%`,
+    opacity: element.opacity,
+    animationDuration: `${element.duration}s`,
+    animationDelay: `${element.delay}s`,
+    '--rain-rest-y': `${(element.delay / 8) * 100}vh`,
+  }
 
   return (
-    <motion.div
-      className="absolute top-0"
-      style={{
-        left: `${element.left}%`,
-        opacity: element.opacity,
-      }}
-      initial={{ y: '-15vh' }}
-      animate={{ y: '115vh' }}
-      transition={{
-        duration: element.duration,
-        delay: element.delay,
-        repeat: Infinity,
-        ease: 'linear',
-      }}
-    >
+    <div className="rain-fall absolute top-0" style={style}>
       {element.kind === 'drop' && (
         <RainDrop size={element.size} color={element.color} outline={outline} />
       )}
@@ -105,17 +100,11 @@ function RainElement({ element }: { element: RainElementData }) {
           outline={outline}
         />
       )}
-    </motion.div>
+    </div>
   )
 }
 
-function ParallaxLayer({
-  children,
-  depth,
-}: {
-  children: React.ReactNode
-  depth: number
-}) {
+function ParallaxLayer({ children, depth }: { children: React.ReactNode; depth: number }) {
   const { x, y } = useParallax(depth)
 
   return (
