@@ -20,6 +20,19 @@ pnpm deploy
 
 `pnpm deploy` runs `pnpm build` followed by `wrangler deploy`. Make sure you are authenticated with `wrangler login` first.
 
+## Lint & Format
+
+Powered by [Oxc](https://oxc.rs/) — `oxlint` for linting, `oxfmt` for formatting.
+
+```bash
+pnpm lint       # oxlint
+pnpm format     # oxfmt (writes)
+pnpm check      # oxfmt --check
+```
+
+- `.oxlintrc.json` — oxlint config (browser/node env, correctness/suspicious/perf categories; `style` is off because oxfmt owns formatting).
+- `.oxfmtrc.jsonc` — oxfmt config (semi/singleQuote/trailing-comma, `sortImports`, `sortTailwindcss` with `cn`, ignore patterns).
+
 ## Project Structure
 
 - `src/routes/` — File-based routes (`__root.tsx`, `index.tsx`, `$.tsx`).
@@ -40,3 +53,5 @@ pnpm deploy
 - Motion
 - Vite 8
 - Cloudflare Workers
+- Oxlint (lint)
+- Oxfmt (format)

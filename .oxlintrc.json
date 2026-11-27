@@ -1,0 +1,29 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2024": true
+  },
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "error",
+    "style": "off"
+  },
+  "rules": {
+    "eslint/sort-imports": "off",
+    "eslint/sort-keys": "off",
+    "unicorn/no-null": "off",
+    "unicorn/filename-case": "off"
+  },
+  "ignorePatterns": [
+    "src/routeTree.gen.ts",
+    "worker-configuration.d.ts",
+    ".cta.json",
+    "dist",
+    "node_modules",
+    ".wrangler",
+    ".tanstack"
+  ]
+}

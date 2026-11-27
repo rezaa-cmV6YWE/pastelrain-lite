@@ -41,7 +41,9 @@ export default function NowPlayingSpotify() {
           <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-800/50">
             <SiSpotify className="text-gray-400" />
           </div>
-          <p className="text-sm text-gray-400">Not playing anything right now.</p>
+          <p className="text-sm text-gray-400">
+            Not playing anything right now.
+          </p>
         </div>
       )}
 

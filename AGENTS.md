@@ -31,6 +31,8 @@ npx @tanstack/cli@latest create my-tanstack-app \
 > Note: `--tailwind` is deprecated in current TanStack CLI; Tailwind is enabled by default for TanStack Start scaffolds.
 >
 > The project directory was later renamed from `my-tanstack-app` to `pastelrain` and the `package.json`, `.cta.json`, and `wrangler.jsonc` names were updated to match.
+>
+> The toolchain was later migrated from ESLint + Prettier to [Oxc](https://oxc.rs/) (`oxlint` + `oxfmt`); `eslint.config.js`, `prettier.config.js`, and `.prettierignore` were removed, and the `@tanstack/eslint-config`, `eslint`, `prettier`, `@ianvs/prettier-plugin-sort-imports`, `prettier-plugin-tailwindcss` devDeps were dropped (oxfmt covers class sorting and import ordering natively). The `oxlint` config was hand-authored and is category-level (`correctness`/`suspicious`/`perf` as errors; `style` is off because `oxfmt` owns formatting) — it is not a rule-for-rule port of `@tanstack/eslint-config`.
 
 ## TanStack Intent
 
@@ -64,8 +66,8 @@ Key installed skill sources:
 | Router             | TanStack Router (file-based)                                |
 | Data fetching      | TanStack Query + `@tanstack/react-router-ssr-query`         |
 | Styling            | Tailwind CSS v4 (`@tailwindcss/vite`)                       |
-| Toolchain          | ESLint via `@tanstack/eslint-config`                        |
-| Formatting         | Prettier                                                    |
+| Linting            | Oxlint (`oxlint`)                                           |
+| Formatting         | Oxfmt (`oxfmt`) — built-in `sortImports`, `sortTailwindcss` |
 | Build tool         | Vite 8                                                      |
 | Deployment/Hosting | Cloudflare Workers via `@cloudflare/vite-plugin` + Wrangler |
 
@@ -73,7 +75,7 @@ Partner integrations represented:
 
 - **Cloudflare**: `@cloudflare/vite-plugin` in `vite.config.ts`, `wrangler.jsonc`, `pnpm deploy` script, Workers-compatible entry (`@tanstack/react-start/server-entry`).
 - **TanStack Query**: provider/context in `src/integrations/tanstack-query/`, SSR integration in `src/router.tsx`, demo route at `src/routes/demo/tanstack-query.tsx`.
-- **ESLint**: `eslint.config.js` extending `@tanstack/eslint-config`, `pnpm lint` script.
+- **Oxc**: `.oxlintrc.json` (correctness/suspicious/perf categories; `style` category is off because oxfmt owns formatting, plus `eslint/sort-imports`, `eslint/sort-keys`, `unicorn/no-null`, `unicorn/filename-case` are explicitly disabled to avoid formatter-vs-linter conflicts); `.oxfmtrc.jsonc` (semi/singleQuote/trailing-comma, `sortImports` grouped external → internal → relative → type, `sortTailwindcss` with `cn`); `pnpm lint`, `pnpm format`, `pnpm check` scripts.
 
 ## Project Structure
 
@@ -95,7 +97,8 @@ pastelrain/
 │   └── routeTree.gen.ts     # Generated route tree
 ├── vite.config.ts           # Vite + Cloudflare + Tailwind + Start plugins
 ├── wrangler.jsonc           # Cloudflare Workers config
-├── eslint.config.js         # ESLint config
+├── .oxlintrc.json           # Oxlint config
+├── .oxfmtrc.jsonc           # Oxfmt config
 ├── tsr.config.json          # TanStack Router generator config
 └── package.json             # pnpm scripts & deps
 ```
