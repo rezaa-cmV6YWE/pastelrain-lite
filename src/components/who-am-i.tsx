@@ -2,29 +2,27 @@ import { Image } from '@unpic/react'
 import type { ReactNode } from 'react'
 import { LuCircuitBoard } from 'react-icons/lu'
 import {
-  SiBetterauth,
   SiBlender,
+  SiBruno,
   SiBun,
+  SiCloudflareworkers,
   SiDiscord,
-  SiDrizzle,
-  SiExpo,
-  SiGit,
   SiGithub,
   SiHono,
-  SiJavascript,
   SiNextdotjs,
-  SiNodedotjs,
-  SiOpencode,
-  SiPostman,
+  SiPostgresql,
   SiReact,
+  SiReactquery,
   SiSteam,
+  SiTailwindcss,
   SiTanstack,
   SiTypescript,
   SiUnity,
-  SiWarp,
+  SiZedindustries,
 } from 'react-icons/si'
-import { TbBrandCSharp } from 'react-icons/tb'
-import { VscVscode } from 'react-icons/vsc'
+import { TbBrandCSharp, TbBrandFramerMotion, TbBrandReactNative } from 'react-icons/tb'
+
+import { ElysiaIcon, HermesAgentIcon, OhMyPiIcon, RexIcon } from '#/components/brand-icons'
 
 interface IconLinkData {
   href: string
@@ -39,31 +37,49 @@ const ICON_GROUPS: Array<{ title: string; links: Array<IconLinkData> }> = [
     title: 'main skills',
     links: [
       {
-        href: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript',
-        label: 'JavaScript',
-        icon: <SiJavascript size={ICON_SIZE} />,
-      },
-      {
         href: 'https://www.typescriptlang.org/',
         label: 'TypeScript',
         icon: <SiTypescript size={ICON_SIZE} />,
       },
-      { href: 'https://nodejs.org/', label: 'Node.js', icon: <SiNodedotjs size={ICON_SIZE} /> },
-      { href: 'https://bun.sh/', label: 'Bun', icon: <SiBun size={ICON_SIZE} /> },
       { href: 'https://react.dev/', label: 'React', icon: <SiReact size={ICON_SIZE} /> },
       { href: 'https://nextjs.org/', label: 'Next.js', icon: <SiNextdotjs size={ICON_SIZE} /> },
-      { href: 'https://tanstack.com/', label: 'TanStack', icon: <SiTanstack size={ICON_SIZE} /> },
-      { href: 'https://expo.dev/', label: 'Expo', icon: <SiExpo size={ICON_SIZE} /> },
-      { href: 'https://hono.dev/', label: 'Hono', icon: <SiHono size={ICON_SIZE} /> },
       {
-        href: 'https://orm.drizzle.team/',
-        label: 'Drizzle ORM',
-        icon: <SiDrizzle size={ICON_SIZE} />,
+        href: 'https://tanstack.com/',
+        label: 'TanStack Start & Router',
+        icon: <SiTanstack size={ICON_SIZE} />,
       },
       {
-        href: 'https://www.better-auth.com/',
-        label: 'Better Auth',
-        icon: <SiBetterauth size={ICON_SIZE} />,
+        href: 'https://tanstack.com/query',
+        label: 'TanStack Query',
+        icon: <SiReactquery size={ICON_SIZE} />,
+      },
+      {
+        href: 'https://tailwindcss.com/',
+        label: 'Tailwind CSS',
+        icon: <SiTailwindcss size={ICON_SIZE} />,
+      },
+      {
+        href: 'https://motion.dev/',
+        label: 'Motion',
+        icon: <TbBrandFramerMotion size={ICON_SIZE} />,
+      },
+      {
+        href: 'https://reactnative.dev/',
+        label: 'React Native',
+        icon: <TbBrandReactNative size={ICON_SIZE} />,
+      },
+      { href: 'https://bun.sh/', label: 'Bun', icon: <SiBun size={ICON_SIZE} /> },
+      { href: 'https://hono.dev/', label: 'Hono', icon: <SiHono size={ICON_SIZE} /> },
+      { href: 'https://elysiajs.com/', label: 'Elysia', icon: <ElysiaIcon size={ICON_SIZE} /> },
+      {
+        href: 'https://www.postgresql.org/',
+        label: 'PostgreSQL',
+        icon: <SiPostgresql size={ICON_SIZE} />,
+      },
+      {
+        href: 'https://workers.cloudflare.com/',
+        label: 'Cloudflare Workers',
+        icon: <SiCloudflareworkers size={ICON_SIZE} />,
       },
     ],
   },
@@ -87,15 +103,19 @@ const ICON_GROUPS: Array<{ title: string; links: Array<IconLinkData> }> = [
   {
     title: 'tools',
     links: [
+      { href: 'https://zed.dev/', label: 'Zed', icon: <SiZedindustries size={ICON_SIZE} /> },
+      { href: 'https://omp.sh/', label: 'Oh My Pi', icon: <OhMyPiIcon size={ICON_SIZE} /> },
       {
-        href: 'https://code.visualstudio.com/',
-        label: 'VS Code',
-        icon: <VscVscode size={ICON_SIZE} />,
+        href: 'https://hermes-agent.nousresearch.com/',
+        label: 'Hermes',
+        icon: <HermesAgentIcon size={ICON_SIZE} />,
       },
-      { href: 'https://opencode.ai/', label: 'OpenCode', icon: <SiOpencode size={ICON_SIZE} /> },
-      { href: 'https://www.warp.dev/', label: 'Warp', icon: <SiWarp size={ICON_SIZE} /> },
-      { href: 'https://git-scm.com/', label: 'Git', icon: <SiGit size={ICON_SIZE} /> },
-      { href: 'https://www.postman.com/', label: 'Postman', icon: <SiPostman size={ICON_SIZE} /> },
+      { href: 'https://www.usebruno.com/', label: 'Bruno', icon: <SiBruno size={ICON_SIZE} /> },
+      {
+        href: 'https://www.superlogical.com/rex',
+        label: 'Rex',
+        icon: <RexIcon size={ICON_SIZE} />,
+      },
     ],
   },
   {
